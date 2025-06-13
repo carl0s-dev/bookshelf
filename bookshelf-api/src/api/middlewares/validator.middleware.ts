@@ -13,6 +13,9 @@ export function Validator(schema: Schema) {
       schema.validateAsync(request.body)
     )
     if (result.ok) {
+      const data = result.value
+      request.body = data
+
       next()
       return
     }
