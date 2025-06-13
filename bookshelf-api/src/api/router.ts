@@ -16,4 +16,4 @@ const swaggerSpec = swaggerJSDoc({
   apis: ['src/api/routes/*.route.ts'],
 })
 
-router.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
