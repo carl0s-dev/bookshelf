@@ -7,5 +7,7 @@ type Config = {
 }
 
 export const config: Config = {
-  DATABASE_URL: process.env.DATABASE_URL ?? 'postgres://username:password@localhost:5432/dbname'
+  DATABASE_URL:
+    process.env.DATABASE_URL ??
+    'postgres://username:password@localhost:5432/dbname',
 }

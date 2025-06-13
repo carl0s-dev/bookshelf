@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
 
@@ -14,7 +14,6 @@ const swaggerSpec = swaggerJSDoc({
     },
   },
   apis: ['src/api/routes/*.route.ts'],
-});
-
+})
 
 router.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
