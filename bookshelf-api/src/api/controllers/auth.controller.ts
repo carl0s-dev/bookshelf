@@ -34,6 +34,7 @@ export async function handleSignIn(
     })
 
     response.cookie('bookshelf', token, {
+      signed: true,
       secure: false,
       maxAge: 7200,
       httpOnly: true,
