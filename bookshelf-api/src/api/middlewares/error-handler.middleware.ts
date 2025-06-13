@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import {
   HttpException,
   InternalServerError,
@@ -7,7 +7,9 @@ import {
 export function errorHandler(
   err: unknown,
   request: Request,
-  response: Response
+  response: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction
 ) {
   if (err instanceof HttpException) {
     response.status(err.code).json({
@@ -22,7 +24,7 @@ export function errorHandler(
 
   console.error(
     `[${timestamp}] [${request.method} ${request.url}] Unhandled Error:`,
-    err instanceof Error ? err.stack : err
+    err
   )
 
   const internalServerError = new InternalServerError()
