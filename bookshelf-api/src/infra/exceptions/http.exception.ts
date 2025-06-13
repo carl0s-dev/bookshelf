@@ -391,10 +391,10 @@ export class HttpException extends Error {
 }
 
 export class BadRequestException extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.BAD_REQUEST,
-      'A solicitação está malformada ou contém parâmetros inválidos.'
+      message ?? 'A solicitação está malformada ou contém parâmetros inválidos.'
     )
 
     this.name = 'BadRequest'
@@ -403,10 +403,10 @@ export class BadRequestException extends HttpException {
 }
 
 export class UnauthorizedException extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.UNAUTHORIZED,
-      'Autenticação necessária para acessar este recurso.'
+      message ?? 'Autenticação necessária para acessar este recurso.'
     )
 
     this.name = 'Unauthorized'
@@ -415,10 +415,10 @@ export class UnauthorizedException extends HttpException {
 }
 
 export class ForbiddenException extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.FORBIDDEN,
-      'Você não tem permissão para acessar este recurso.'
+      message ?? 'Você não tem permissão para acessar este recurso.'
     )
 
     this.name = 'Forbidden'
@@ -427,8 +427,11 @@ export class ForbiddenException extends HttpException {
 }
 
 export class NotFoundException extends HttpException {
-  constructor(cause?: unknown) {
-    super(HttpStatus.NOT_FOUND, 'O recurso solicitado não foi encontrado.')
+  constructor(message?: string, cause?: unknown) {
+    super(
+      HttpStatus.NOT_FOUND,
+      message ?? 'O recurso solicitado não foi encontrado.'
+    )
 
     this.name = 'NotFound'
     this.cause = cause
@@ -436,10 +439,11 @@ export class NotFoundException extends HttpException {
 }
 
 export class ConflictException extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.CONFLICT,
-      'Conflito ao processar a solicitação. Verifique os dados enviados.'
+      message ??
+        'Conflito ao processar a solicitação. Verifique os dados enviados.'
     )
 
     this.name = 'Conflict'
@@ -448,10 +452,11 @@ export class ConflictException extends HttpException {
 }
 
 export class TooManyRequestsException extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.TOO_MANY_REQUESTS,
-      'Muitas requisições em um curto período. Tente novamente mais tarde.'
+      message ??
+        'Muitas requisições em um curto período. Tente novamente mais tarde.'
     )
 
     this.name = 'TooManyRequests'
@@ -460,10 +465,11 @@ export class TooManyRequestsException extends HttpException {
 }
 
 export class InternalServerError extends HttpException {
-  constructor(cause?: unknown) {
+  constructor(message?: string, cause?: unknown) {
     super(
       HttpStatus.INTERNAL_SERVER_ERROR,
-      'O servidor encontrou uma condição inesperada que o impediu de atender a sua solicitação.'
+      message ??
+        'O servidor encontrou uma condição inesperada que o impediu de atender a sua solicitação.'
     )
 
     this.name = 'InternalServerError'
