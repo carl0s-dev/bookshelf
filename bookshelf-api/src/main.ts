@@ -8,6 +8,7 @@ import { config } from 'infra/config'
 
 const app = express()
 
+app.use(cookieParser(config.COOKIE_SECRET))
 app.use(
   cors({
     origin: ['http://localhost:3000'],
@@ -16,7 +17,6 @@ app.use(
 )
 app.use(express.json())
 app.use('/api', router)
-app.use(cookieParser(config.COOKIE_SECRET))
 app.use(errorHandler)
 
 await sequelize.sync({

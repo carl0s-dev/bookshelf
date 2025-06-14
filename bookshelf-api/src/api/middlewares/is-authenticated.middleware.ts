@@ -9,14 +9,13 @@ export async function isAuthenticated(
   response: Response,
   next: NextFunction
 ) {
-  const { bookshelf } = request.signedCookies
-
-  if (!bookshelf) {
+  const accessToken = request.signedCookies['bookshelf']
+  if (!accessToken) {
     throw new UnauthorizedException()
   }
 
   const result = await Result.fromAsync(() =>
-    jwtVerify(bookshelf, config.ACCESS_SECRET, {
+    jwtVerify(accessToken, config.ACCESS_SECRET, {
       algorithms: ['HS256'],
       issuer: 'bookshelf',
       audience: 'bookshelf',
