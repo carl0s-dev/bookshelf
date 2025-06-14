@@ -4,7 +4,7 @@ dotenv.config()
 
 type Config = {
   DATABASE_URL: string
-  SECRET: Uint8Array<ArrayBufferLike>
+  ACCESS_SECRET: Uint8Array<ArrayBufferLike>
   COOKIE_SECRET: string
 }
 
@@ -14,6 +14,6 @@ export const config: Config = {
   DATABASE_URL:
     process.env.DATABASE_URL ??
     'postgres://username:password@localhost:5432/dbname',
-  SECRET: encoder.encode(process.env.SECRET ?? 'SECRET'),
+  ACCESS_SECRET: encoder.encode(process.env.ACCESS_SECRET ?? 'SECRET'),
   COOKIE_SECRET: process.env.COOKIE_SECRET ?? 'COOKIE_SECRET',
 }

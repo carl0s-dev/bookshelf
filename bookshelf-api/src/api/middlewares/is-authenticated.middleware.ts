@@ -16,7 +16,7 @@ export async function isAuthenticated(
   }
 
   const result = await Result.fromAsync(() =>
-    jwtVerify(bookshelf, config.SECRET, {
+    jwtVerify(bookshelf, config.ACCESS_SECRET, {
       algorithms: ['HS256'],
       issuer: 'bookshelf',
       audience: 'bookshelf',

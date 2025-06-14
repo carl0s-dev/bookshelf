@@ -59,7 +59,7 @@ export async function executeSignIn(params: Params) {
     .setIssuer('bookshelf')
     .setAudience('bookshelf')
     .setExpirationTime('2h')
-    .sign(config.SECRET)
+    .sign(config.ACCESS_SECRET)
 
   return token
 }
