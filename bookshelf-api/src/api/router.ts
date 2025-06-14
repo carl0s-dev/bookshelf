@@ -2,6 +2,7 @@ import { Router } from 'express'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJSDoc from 'swagger-jsdoc'
 import { authRouter } from './routes/auth.routes'
+import { bookRouter } from './routes/book.routes'
 
 export const router = Router()
 
@@ -19,3 +20,4 @@ const swaggerSpec = swaggerJSDoc({
 
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 router.use('/auth', authRouter)
+router.use('/books', bookRouter)
