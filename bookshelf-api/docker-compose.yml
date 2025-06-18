@@ -1,0 +1,18 @@
+name: 'bookshelf'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: bookshelf
+      POSTGRES_PASSWORD: bookshelf
+      POSTGRES_DB: bookshelf
+    shm_size: 128mb
+    restart: always
+
+volumes:
+  postgres:
