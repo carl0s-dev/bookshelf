@@ -20,19 +20,17 @@ export function errorHandler(
     return
   }
 
-  const timestamp = new Date().toISOString()
+  const internalServerError = new InternalServerError()
 
   console.error(
-    `[${timestamp}] [${request.method} ${request.url}] Unhandled Error:`,
+    `[${internalServerError.timestamp}] [${request.method} ${request.url}] Unhandled Error:`,
     err
   )
-
-  const internalServerError = new InternalServerError()
 
   response.status(internalServerError.code).json({
     code: internalServerError.code,
     name: internalServerError.name,
     message: internalServerError.message,
-    timestamp: timestamp,
+    timestamp: internalServerError.timestamp,
   })
 }
