@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import bookController from 'api/controllers/book.controller'
 import { Validator } from 'api/middlewares/validator.middleware'
-import { BookSchema, PartialBookSchema } from 'infra/models/book.model'
 import { isAuthenticated } from 'api/middlewares/is-authenticated.middleware'
+import { BookSchema, PartialBookSchema } from 'utils/schemas/book.schemas'
 
 export const bookRouter = Router()
 

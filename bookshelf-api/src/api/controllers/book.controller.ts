@@ -1,5 +1,6 @@
 import bookService from 'api/services/book.service'
 import { Request, Response, NextFunction } from 'express'
+import { HttpStatus } from 'infra/enums/http-status'
 import { BadRequestException } from 'infra/exceptions/http.exception'
 import Joi from 'joi'
 import { Result } from 'utils/result'
@@ -9,7 +10,7 @@ async function handleInsert(req: Request, res: Response, next: NextFunction) {
     const body = req.body
 
     const data = await bookService.executeInsert(body)
-    res.status(200).json(data)
+    res.status(HttpStatus.OK).json(data)
   } catch (err) {
     next(err)
   }
@@ -35,7 +36,7 @@ async function handleSelectList(
       limit,
       offset,
     })
-    res.status(200).json(data)
+    res.status(HttpStatus.OK).json(data)
   } catch (err) {
     next(err)
   }
@@ -58,7 +59,7 @@ async function handleUpdate(req: Request, res: Response, next: NextFunction) {
       id,
       ...req.body,
     })
-    res.status(200).json(data)
+    res.status(HttpStatus.OK).json(data)
   } catch (err) {
     next(err)
   }

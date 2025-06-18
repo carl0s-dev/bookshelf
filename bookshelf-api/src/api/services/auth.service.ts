@@ -1,4 +1,3 @@
-import { SignJWT } from 'jose'
 import { compare, genSalt, hash } from 'bcrypt'
 import {
   ConflictException,
@@ -7,14 +6,15 @@ import {
 import { User } from 'infra/models/user.model'
 import { UniqueConstraintError } from 'sequelize'
 import { Result } from 'utils/result'
-import { config } from 'infra/config'
+
+import jwt from 'utils/lib/jsonwebtoken'
 
 type Params = {
   username: string
   password: string
 }
 
-export async function executeSignUp(params: Params) {
+async function executeSignUp(params: Params) {
   const password_salt = await genSalt(12)
   const password_hash = await hash(params.password, password_salt)
 
@@ -36,7 +36,7 @@ export async function executeSignUp(params: Params) {
   throw error
 }
 
-export async function executeSignIn(params: Params) {
+async function executeSignIn(params: Params) {
   const user = await User.findOne({
     where: {
       username: params.username,
@@ -53,13 +53,10 @@ export async function executeSignIn(params: Params) {
     throw new UnauthorizedException('Credenciais Inválidas.')
   }
 
-  const token = await new SignJWT({ id })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuedAt()
-    .setIssuer('bookshelf')
-    .setAudience('bookshelf')
-    .setExpirationTime('2h')
-    .sign(config.ACCESS_SECRET)
-
-  return token
+  return jwt.createToken(id)
 }
+
+export default Object.freeze({
+  executeSignUp,
+  executeSignIn,
+})
