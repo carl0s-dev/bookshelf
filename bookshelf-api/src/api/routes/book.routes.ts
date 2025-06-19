@@ -11,9 +11,12 @@ bookRouter.post(
   [isAuthenticated, Validator(BookSchema)],
   bookController.handleInsert
 )
-bookRouter.get('/list', bookController.handleSelectList)
-bookRouter.put(
+
+bookRouter.patch(
   '/:id',
   [isAuthenticated, Validator(PartialBookSchema)],
   bookController.handleUpdate
 )
+
+bookRouter.get('/:id', bookController.handleSelectOne)
+bookRouter.get('/', bookController.handleSelectAll)

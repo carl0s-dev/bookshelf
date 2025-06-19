@@ -14,6 +14,20 @@ type ExecuteInsertParams = {
   description: string
 }
 
+type ExecuteSelectOneParams = {
+  id: string
+}
+
+type ExecuteSelectAllParams = {
+  query?: string
+  limit?: number
+  offset?: number
+}
+
+type ExecuteUpdateParams = Partial<ExecuteInsertParams> & {
+  id: string
+}
+
 async function executeInsert(params: ExecuteInsertParams) {
   const result = await Result.fromAsync(() =>
     Book.create({
@@ -33,13 +47,28 @@ async function executeInsert(params: ExecuteInsertParams) {
   return result.value
 }
 
-type ExecuteSelectListParams = {
-  query?: string
-  limit?: number
-  offset?: number
+async function executeUpdate(params: ExecuteUpdateParams) {
+  const { id, ...data } = params
+
+  return Book.update(data, {
+    where: {
+      id,
+    },
+    returning: true,
+  })
 }
 
-async function executeSelectList(params: ExecuteSelectListParams) {
+async function executeSelectOne(params: ExecuteSelectOneParams) {
+  const data = await Book.findOne({
+    where: {
+      id: params.id,
+    },
+  })
+
+  return data
+}
+
+async function executeSelectAll(params: ExecuteSelectAllParams) {
   const where = params.query
     ? {
         title: {
@@ -55,23 +84,9 @@ async function executeSelectList(params: ExecuteSelectListParams) {
   })
 }
 
-type ExecuteUpdateParams = Partial<ExecuteInsertParams> & {
-  id: string
-}
-
-async function executeUpdate(params: ExecuteUpdateParams) {
-  const { id, ...data } = params
-
-  return Book.update(data, {
-    where: {
-      id,
-    },
-    returning: true,
-  })
-}
-
 export default Object.freeze({
   executeInsert,
-  executeSelectList,
   executeUpdate,
+  executeSelectOne,
+  executeSelectAll,
 })
