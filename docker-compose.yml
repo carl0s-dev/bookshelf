@@ -1,0 +1,41 @@
+name: 'bookshelf'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: bookshelf
+      POSTGRES_PASSWORD: bookshelf
+      POSTGRES_DB: bookshelf
+    shm_size: 128mb
+    restart: always
+  api:
+    build: ./bookshelf-api
+    ports:
+      - "1818:1818"
+    depends_on:
+      - postgres
+    environment:
+      ENVIRONMENT: production
+      JWT_TTL: 7200000
+      JWT_SECRET: SECRET
+      JWT_ISSUER: bookshelf
+      JWT_AUDIENCE: bookshelf
+      DATABASE_URL: postgres://bookshelf:bookshelf@postgres:5432/bookshelf
+    restart: unless-stopped
+  web:
+    build: ./bookshelf-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      API_URL: http://api:1818/api
+    restart: unless-stopped
+
+volumes:
+  postgres:

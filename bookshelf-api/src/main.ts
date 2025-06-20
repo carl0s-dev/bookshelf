@@ -2,8 +2,8 @@ import cors from 'cors'
 import express from 'express'
 import { router } from './api/router'
 import { errorHandler } from 'api/middlewares/error-handler.middleware'
-import { sequelize } from 'infra/database'
 import cookieParser from 'cookie-parser'
+import { sequelize } from 'infra/database'
 
 const app = express()
 
@@ -18,9 +18,7 @@ app.use(express.json())
 app.use('/api', router)
 app.use(errorHandler)
 
-await sequelize.sync({
-  alter: true,
-})
+await sequelize.sync()
 
 app.listen(1818, () => {
   console.log('Server Running on http://localhost:1818')
